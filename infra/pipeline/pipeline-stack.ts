@@ -1,5 +1,9 @@
 import { SecretValue, Stack } from "aws-cdk-lib";
-import { BuildSpec, LinuxBuildImage } from "aws-cdk-lib/aws-codebuild";
+import {
+    BuildEnvironmentVariableType,
+    BuildSpec,
+    LinuxBuildImage,
+} from "aws-cdk-lib/aws-codebuild";
 import {
     CodePipeline,
     CodePipelineSource,
@@ -8,11 +12,11 @@ import {
 
 import { Construct } from "constructs";
 import { PipelineStage } from "./pipeline-stage";
+import { Effect, PolicyStatement } from "aws-cdk-lib/aws-iam";
 
 export class PipelineStack extends Stack {
     constructor(scope: Construct, id: string) {
         super(scope, id);
-
         const pipeline = new CodePipeline(this, "Pipeline", {
             pipelineName: "SamplePipeline",
             dockerEnabledForSynth: true,
@@ -37,8 +41,27 @@ export class PipelineStack extends Stack {
                 ],
             }),
             synthCodeBuildDefaults: {
+                // rolePolicy: [
+                //     new PolicyStatement({
+                //         actions: ["secretsmanager:GetSecretValue"],
+                //         resources: [
+                //             "arn:aws:secretsmanager:us-west-2:252703795646:secret:dockerhub-DNSSOg",
+                //         ],
+                //         effect: Effect.ALLOW,
+                //     }),
+                // ],
                 buildEnvironment: {
                     buildImage: LinuxBuildImage.STANDARD_6_0,
+                    environmentVariables: {
+                        DOCKERHUB_USERNAME: {
+                            type: BuildEnvironmentVariableType.SECRETS_MANAGER,
+                            value: "dockerhub:username",
+                        },
+                        DOCKERHUB_PASSWORD: {
+                            type: BuildEnvironmentVariableType.SECRETS_MANAGER,
+                            value: "dockerhub:password",
+                        },
+                    },
                 },
                 partialBuildSpec: BuildSpec.fromObject({
                     phases: {
@@ -46,6 +69,9 @@ export class PipelineStack extends Stack {
                             "runtime-versions": {
                                 nodejs: "16",
                             },
+                            commands: [
+                                "docker login --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASSWORD",
+                            ],
                         },
                     },
                 }),
