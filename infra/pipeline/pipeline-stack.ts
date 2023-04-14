@@ -32,7 +32,8 @@ export class PipelineStack extends Stack {
                 commands: [
                     "npm i",
                     "npm i cdk-asl-definition-extractor -g",
-                    "make test-start-local",
+                    "npx cdk synth",
+                    //"make test-start-local",
                 ],
             }),
             synthCodeBuildDefaults: {
