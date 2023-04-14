@@ -27,7 +27,11 @@ export class PipelineStack extends Stack {
                         ),
                     }
                 ),
-                commands: ["npm i", "make test-start-local"],
+                commands: [
+                    "npm i",
+                    "npm i cdk-asl-definition-extractor -g",
+                    "make test-start-local",
+                ],
             }),
             synthCodeBuildDefaults: {
                 buildEnvironment: {
