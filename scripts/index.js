@@ -26,6 +26,8 @@ if (Array.isArray(out)) {
         )} --name ${
             out[i].identifier
         } --role-arn "arn:aws:iam::012345678901:role/DummyRole" --type "EXPRESS" `;
+        console.log("Command to Run");
+        console.log(command);
         exec.execSync(command);
     }
 }
