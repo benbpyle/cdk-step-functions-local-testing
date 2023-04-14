@@ -14,6 +14,7 @@ export class PipelineStack extends Stack {
 
         const pipeline = new CodePipeline(this, "Pipeline", {
             pipelineName: "SamplePipeline",
+            dockerEnabledForSynth: true,
             synth: new ShellStep("Synth", {
                 input: CodePipelineSource.gitHub(
                     "benbpyle/cdk-step-functions-local-testing",
