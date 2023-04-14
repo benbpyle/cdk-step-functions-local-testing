@@ -1,4 +1,5 @@
 import { SecretValue, Stack } from "aws-cdk-lib";
+import { BuildSpec, LinuxBuildImage } from "aws-cdk-lib/aws-codebuild";
 import {
     CodePipeline,
     CodePipelineSource,
@@ -26,8 +27,22 @@ export class PipelineStack extends Stack {
                         ),
                     }
                 ),
-                commands: ["npx cdk synth"],
+                commands: ["npm i", "make test-start-local"],
             }),
+            synthCodeBuildDefaults: {
+                buildEnvironment: {
+                    buildImage: LinuxBuildImage.STANDARD_6_0,
+                },
+                partialBuildSpec: BuildSpec.fromObject({
+                    phases: {
+                        install: {
+                            "runtime-versions": {
+                                nodejs: "16",
+                            },
+                        },
+                    },
+                }),
+            },
         });
 
         // pipeline.addStage(new InfraStage(this, `${props.options.stackNamePrefix}-${props.options.stackName}-Prod`, {
