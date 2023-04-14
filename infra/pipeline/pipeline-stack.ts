@@ -41,15 +41,6 @@ export class PipelineStack extends Stack {
                 ],
             }),
             synthCodeBuildDefaults: {
-                // rolePolicy: [
-                //     new PolicyStatement({
-                //         actions: ["secretsmanager:GetSecretValue"],
-                //         resources: [
-                //             "arn:aws:secretsmanager:us-west-2:252703795646:secret:dockerhub-DNSSOg",
-                //         ],
-                //         effect: Effect.ALLOW,
-                //     }),
-                // ],
                 buildEnvironment: {
                     buildImage: LinuxBuildImage.STANDARD_6_0,
                     environmentVariables: {
