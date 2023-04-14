@@ -2,7 +2,7 @@ run:
 	cdk synth
 	sam local start-api -t cdk.out/main-UserProfile.template.json --env-vars environment.json
 test-start-local: 
-	cdk synth --quiet
+	npx cdk synth --quiet
 	docker-compose up -d
 	sleep 10
 	node scripts/index.js
