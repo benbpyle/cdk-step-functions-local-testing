@@ -10,7 +10,7 @@ console.log("*************************");
 const out = JSON.parse(
     exec
         .execSync(
-            "cdk-asl-definition-extractor  -f cdk.out/LocalTesting.template.json"
+            "cdk-asl-definition-extractor  -f cdk.out/assembly-LocalTesting-PipelineStage/LocalTestingPipelineStageAppStageAB1560A8.template.json"
         )
         .toString()
 );

@@ -7,6 +7,7 @@ import {
 } from "aws-cdk-lib/pipelines";
 
 import { Construct } from "constructs";
+import { PipelineStage } from "./pipeline-stage";
 
 export class PipelineStack extends Stack {
     constructor(scope: Construct, id: string) {
@@ -50,13 +51,6 @@ export class PipelineStack extends Stack {
             },
         });
 
-        // pipeline.addStage(new InfraStage(this, `${props.options.stackNamePrefix}-${props.options.stackName}-Prod`, {
-        //     options: props.options,
-        //     stage: StageEnvironment.PROD,
-        //     env: {
-        //         account: props.options.productionAccount,
-        //         region: props.options.defaultRegion
-        //     },
-        // }));
+        pipeline.addStage(new PipelineStage(this, "PipelineStage"));
     }
 }
