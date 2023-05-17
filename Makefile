@@ -3,7 +3,7 @@ run:
 	sam local start-api -t cdk.out/main-UserProfile.template.json --env-vars environment.json
 test-start-local: 
 	npx cdk synth --quiet
-	docker-compose up -d
+	docker-compose up -d --quiet-pull
 	sleep 10
 	node scripts/index.js
 	npm run test-sf

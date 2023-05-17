@@ -12,7 +12,6 @@ import {
 
 import { Construct } from "constructs";
 import { PipelineStage } from "./pipeline-stage";
-import { Effect, PolicyStatement } from "aws-cdk-lib/aws-iam";
 
 export class PipelineStack extends Stack {
     constructor(scope: Construct, id: string) {

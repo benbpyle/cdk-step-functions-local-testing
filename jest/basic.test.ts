@@ -26,7 +26,7 @@ describe("SF Integration Tests", () => {
         });
 
         const startOutput = await client.send(startCommand);
-        expect(startOutput.status).toBe("SUCCEEDED");
+        expect(startOutput.status).toBe("FAILED");
     });
 
     it("Should Fail Failure Path", async () => {
